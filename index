@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<link rel="stylesheet" href="style.css">
+
+
+
+
+<title>bevasarlo lista</title>
+
+
+</head>
+<body>
+
+
+<div class='box'>
+  <div class='wave -one'></div>
+  <div class='wave -two'></div>
+  <div class='wave -three'></div>
+</div>
+
+
+
+
+
+		<!-- cím -->
+		<div class="container center">
+			<header class="text-center" id="header1">
+				<h1 class="display-3">Bevásárló lista </h1>
+			</header>
+
+		
+		
+		
+		<!-- card -->
+		<div class="card m-4 text-center" id="todoApp">
+		
+		
+		  <div class="card-header d-flex flex-row">
+			<button type="button" class="btn btn-primary mr-3" @click="OnClickAllDone()">Mind megvéve</button>
+			
+			<div class="form-group mb-0 flex-grow">
+		
+				<input type="text" class="form-control"  aria-describedby="emailHelp" placeholder="Adj hozzá egy terméket" @keyup.enter="OnEnterAddTodo()" v-model="newTodoName">
+				
+			</div>
+			
+		  </div>
+		  
+		  <div class="card-body p-0">
+			 <ul class="list-group list-group-flush">
+				<li class="list-group-item d-flex flex-row align-items-center" v-for="(todo,index) in filteredTodoCollection">
+				<!--todo kész-->
+					<div class="custom-control custom-checkbox">
+					  <input type="checkbox" class="custom-control-input" :id="'checkbox' + index" v-model="todo.completed">
+					  <label class="custom-control-label" :for="'checkbox' + index"></label>
+					</div>
+					
+					<!-- todo.completed ? egy rövid if -->
+					
+					<span :class="{'line-through': todo.completed
+					}" v-show="!todo.editing"
+					@dblclick="OnDblClickTodoName(todo)" >{{todo.name}} {{ todo.completed ? 'megvéve' : 'nincs a kosárban' }}</span>
+					
+					<div class="form-group mb-0 flex-grow" v-show="todo.editing">
+				
+						<input type="text" class="form-control" v-model="editingTodoName" @keyup.enter="OnEnterTodoName(todo)" @blur="OnCancelTodoName(todo)" @keyup.esc="OnCancelTodoName(todo)">
+						
+					</div>
+				</li>
+				<!--<li class="list-group-item d-flex flex-row align-items-center" v-for="(todo,index) in todoCollection">
+					
+					
+				</li> -->
+			 </ul>
+		  </div>
+		  <div class="card-footer  d-flex flex-row justify-content-between">
+		  <!--számláló-->
+			<span>{{counter}} {{counter > 1 ? 'termékek' : 'termék'}} nincs a kosárban</span>
+			
+			<div>
+				<button type="button" class="btn btn-sm " @click="SetFilter('all')" :class="GetFilterButtonClass('all')">
+				Összes  
+				</button> <!-- //össszes elem-->
+				
+				<button type="button" class="btn btn-sm  " @click="SetFilter('active')"  :class="GetFilterButtonClass('active')">
+				Szükséges még 
+				</button><!-- amelyik nincs kipipálva-->
+				
+				<button type="button" class="btn btn-sm  " @click="SetFilter('completed')"  :class="GetFilterButtonClass('completed')">
+				Megvásárolt 
+				</button><!-- már kivannak pipálva meglettvéve-->
+				
+				
+				
+			</div>
+			<!--megvett termékek törlése -->
+				<button type="button" class="btn btn-sm btn btn-link " @click="OnClickRemoveCompleted()">Megvásárolt törlése</button>
+			
+		  </div>
+		</div>
+		
+		
+		
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="script.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html>
